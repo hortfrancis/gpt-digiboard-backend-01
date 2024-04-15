@@ -31,4 +31,16 @@ app.post('/message', (req, res) => {
     res.status(200).send('Message received');
 });
 
+app.get('/message', (req, res) => {
+    try {
+        // Read the message from the text file
+        const message = fs.readFileSync(path.join(__dirname, 'data', 'message.txt'), 'utf8');
+        console.log('Message read from file:', message);
+        res.status(200).json({ message: message });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send('Error reading message from file');
+    }
+});
+
 module.exports = app;
